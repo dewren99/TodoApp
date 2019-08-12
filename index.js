@@ -7,6 +7,7 @@ const {
 } = electron;
 
 let mainWindow;
+let addWindow;
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({});
@@ -16,11 +17,27 @@ app.on('ready', () => {
   Menu.setApplicationMenu(mainMenu);
 });
 
+function createAddWindow() {
+  addWindow = new BrowserWindow({
+    width: 250,
+    height: 200,
+    title: 'Add New Todo';
+  });
+}
+
 const menuTemplate = [{
   label: 'File',
   submenu: [{
-    label: 'New Todo'
-  }]
+      label: 'New Todo'
+    },
+    {
+      label: 'Quit',
+      accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+      click() {
+        app.quit();
+      }
+    }
+  ]
 }];
 
 if (process.platform === 'darwin') {
