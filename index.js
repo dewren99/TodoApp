@@ -3,7 +3,8 @@ const electron = require('electron');
 const {
   app,
   BrowserWindow,
-  Menu
+  Menu,
+  ipcMain
 } = electron;
 
 let mainWindow;
@@ -27,6 +28,12 @@ function createAddWindow() {
   });
   addWindow.loadURL(`file://${__dirname}/add.html`);
 }
+
+ipcMain.on('todo:add', (event, todo) => {
+  mainWindow.webContents.send('todo:add', todo);
+  addWindow.close();
+});
+
 
 const menuTemplate = [{
   label: 'File',
@@ -54,3 +61,16 @@ if (process.platform === 'darwin') {
     }]
   });
 }
+
+// if (process.env.NODE_ENV !== 'production') {
+//   menuTemplate.push({
+//     label: 'Developer View',
+//     submenu: [{
+//       tabel: 'Toggle Developer Tools',
+//       accelerator: process.platform === 'darwin' ? 'Command+Alt+I' : 'Ctrl+Shift+I',
+//       click(item, focusedWindow) {
+//         focusedWindow.toggleDevTools();
+//       }
+//     }]
+//   });
+// }
