@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/dewren99/TodoApp#readme",
   "dependencies": {
-    "electron": "^6.0.1"
+    "electron": "^7.2.4"
   }
 }
